@@ -15,11 +15,10 @@ class FetchDemo extends React.Component {
 
   componentDidMount() {
     // Remove the 'www.' to cause a CORS error (and see the error state)
-    axios.get(`http://www.reddit.com/r/${this.props.subreddit}.json`)
+    axios.get(`http://localhost:8000/posts/?format=json`)
       .then(res => {
         // Transform the raw data by extracting the nested posts
-        const posts = res.data.data.children.map(obj => obj.data);
-
+  const posts = res.data; //.map(obj => obj.data);
         // Update state to trigger a re-render.
         // Clear any errors, and turn off the loading indiciator.
         this.setState({
@@ -57,7 +56,7 @@ class FetchDemo extends React.Component {
     return (
       <ul>
         {this.state.posts.map(post =>
-          <li key={post.id}>{post.title}</li>
+          <li key={post.id}>{post.id}</li>
         )}
       </ul>
     );
