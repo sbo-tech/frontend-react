@@ -1,23 +1,19 @@
 /* eslint-disable */
 import React from 'react';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
+class DetailPage extends React.Component {
   componentDidMount(props) {
     console.log('App mounted', props)
   }
 
   render() {
     return (
-      <div>
-        <h1> My App </h1>
-
+      <div className="wrapper">
+        <h1> Detail Page </h1>
       </div>
-    )
+    );
   }
+
 }
 
-export default App
+export default DetailPage;

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 
-class App extends React.Component {
+class ListPage extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -12,12 +12,12 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1> My App </h1>
-
+      <div className="wrapper">
+        <h1> List Page </h1>
       </div>
-    )
+    );
   }
+
 }
 
-export default App
+export default ListPage;
