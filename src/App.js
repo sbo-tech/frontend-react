@@ -1,23 +1,63 @@
 /* eslint-disable */
-import React from 'react';
+import React, {PropTypes} from 'react';
+import store from './redux/store'
+import {addToken, itemsFetchData} from './redux/actions'
+import { connect } from 'react-redux';
 
 class App extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      tokens: {},
+      loading: true,
+      error: null
+    };
+    this.newToken = this.newToken.bind(this)
   }
 
-  componentDidMount(props) {
-    console.log('App mounted', props)
+  componentDidMount() {
+    console.log('App mounted', store.getState())
+  }
+
+  componentWillReceiveProps(nextProps, nextContext) {
+    // console.log('new props')
+  }
+
+  newToken() {
+    store.dispatch(addToken(Math.random().toString()))
   }
 
   render() {
+    let {tokens} = this.props
     return (
-      <div>
-        <h1> My App </h1>
+      <div className='text-center'>
+        {tokens ?
+          <small> {JSON.stringify(tokens.pop())} </small>
+          : null  }
+        <p> redux token sample (open logs </p>
+
+        <button className='btn btn-primary' onClick={this.newToken}>New Token </button>
+
 
       </div>
     )
   }
 }
 
-export default App
+App.propTypes = {
+  tokens: PropTypes.array.isRequired
+};
+
+const mapStateToProps = (state) => {
+  return {
+    tokens: state.tokens
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToken: () => dispatch(addToken())
+  };
+};
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(App);
