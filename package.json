@@ -17,6 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "prep": "rm -rf ../learningpython3/blog/static/* && cp -r build/* ../learningpython3/blog/static/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
