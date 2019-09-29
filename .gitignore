@@ -8,6 +8,7 @@ coverage
 
 # production
 build
+*.gzip
 
 # misc
 .DS_Store

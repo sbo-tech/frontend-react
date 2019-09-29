@@ -1,81 +1,51 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
+/* eslint-disable */
+import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
+import { createStore } from 'redux'
+import { Provider, connect } from 'react-redux'
+import ListPage from './components/ListPage';
+import DetailPage from './components/DetailPage';
+import App from './App'
+import 'bootstrap/dist/css/bootstrap.css';
 
-class FetchDemo extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      posts: [],
-      loading: true,
-      error: null
-    };
-  }
+import { Router, Route, Link, hashHistory, useRouterHistory, IndexRoute } from 'react-router';
 
-  componentDidMount() {
-    // Remove the 'www.' to cause a CORS error (and see the error state)
-    axios.get(`http://localhost:8000/posts/?format=json`)
-      .then(res => {
-        // Transform the raw data by extracting the nested posts
-  const posts = res.data; //.map(obj => obj.data);
-        // Update state to trigger a re-render.
-        // Clear any errors, and turn off the loading indiciator.
-        this.setState({
-          posts,
-          loading: false,
-          error: null
-        });
-      })
-      .catch(err => {
-        // Something went wrong. Save the error in state and re-render.
-        this.setState({
-          loading: false,
-          error: err
-        });
-      });
-  }
 
-  renderLoading() {
-    return <div>Loading...</div>;
-  }
+// React component
+const Main = (props) => (
 
-  renderError() {
-    return (
-      <div>
-        Uh oh: {this.state.error.message}
-      </div>
-    );
-  }
+  <div className="container">
+    <h1> Main Router </h1>
 
-  renderPosts() {
-    if(this.state.error) {
-      return this.renderError();
-    }
+    <h2>
+      <a href="/#/"> Home </a> &nbsp; | &nbsp;
+      <a href="/#/list"> List View </a> &nbsp;
 
-    return (
-      <ul>
-        {this.state.posts.map(post =>
-          <li key={post.id}>{post.id}</li>
-        )}
-      </ul>
-    );
-  }
 
-  render() {
-    return (
-      <div>
-        <h1>{`/r/${this.props.subreddit}`}</h1>
-        {this.state.loading ?
-          this.renderLoading()
-          : this.renderPosts()}
-      </div>
-    );
-  }
-}
+    </h2>
+    <Router history={hashHistory} >
 
-// Change the subreddit to anything you like
+      <Route path="/" component={App} />
+      <Route path="list" component={ListPage}/>
+      <Route path="show" component={DetailPage}/>
+
+
+
+    </Router>
+
+    </div>
+
+)
+
+import reducers from './reducers'
+const store = createStore(reducers);
+
+/* Render with redux, ignore redux for right now, not using yet. */
+
 ReactDOM.render(
-  <FetchDemo subreddit="reactjs"/>,
-  document.getElementById('root')
+  <Provider store={store}>
+    <Main />
+  </Provider>,
+  document.getElementById('app')
 );
